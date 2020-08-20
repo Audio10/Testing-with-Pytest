@@ -107,3 +107,97 @@ def test_member_access():
 ...
 ```
 
+
+
+## -x, –exitfirst 
+
+Normal pytest behavior is to run every test it finds. If a test function encounters a failing assert or an exception, the execution for that test stops there and the test fails. And then pytest runs the next test. Most of the time, this is what you want. However, especially when debugging a problem, **stopping the entire test session immediately when a test fails** is the right thing to do. That’s what the -x option does.
+
+```bash
+pytest -x
+```
+
+
+
+## –maxfail=num 
+
+The -x option stops after one test failure. If you want to let some failures happen, but not a ton, use the --maxfail option to specify how many failures are okay with you.
+
+```bash
+// The test will be stopped when it has 2 fails.
+pytest --maxfail=2 --tb=no
+```
+
+## -s
+
+The -s flag allows print statements—or really any output that normally would be printed to stdout —to actually be printed to stdout while the tests are running.
+
+**With that you can use prints and view them on the console.** 
+
+```bash
+pytest -m run_these_please -s
+```
+
+
+
+## –lf, –last-failed 
+
+When one or more tests fails, having a convenient way to run just the failing tests is helpful for debugging. Just use --lf and you’re ready to debug:
+
+```bash
+pytest --lf
+```
+
+
+
+## –ff, –failed-first 
+
+The --ff/--failed-first option will do the same as --last-failed, and then run the rest of the tests that passed last time:
+
+```bash
+pytest --ff
+```
+
+## -l, –showlocals 
+
+If you use the -l/--showlocals option, local variables and their values are displayed with tracebacks for failing tests.
+
+```bash
+// Show the value of the variables if we have a error.
+pytest -l
+```
+
+
+
+## –tb=style (Traceback)
+
+The --tb=style option modifies the way tracebacks for failures are output. When a test fails, pytest lists the failures and what’s called a traceback, which shows you the exact line where the failure occurred. Although tracebacks are helpful most of time, there may be times when they get annoying. 
+
+```bash
+// It doesn't show the traceback
+pytest --tb=no
+
+// It shows the traceback in a line
+pytest --tb=line
+
+// It shows a short traceback
+pytest --tb=short
+
+// It shows you the most exhaustive, informative traceback possible
+pytest --tb=long
+
+
+```
+
+
+
+## –durations=N 
+
+The --durations=N option is incredibly helpful when you’re trying to speed up your test suite. It doesn’t change how your tests are run; it reports the slowest N number of tests/setups/teardowns after the tests run. If you pass in --durations=0, **it reports everything in order of slowest to fastest**.
+
+
+
+```
+pytest --durations=3
+```
+
